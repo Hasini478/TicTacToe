@@ -1,26 +1,58 @@
+import java.util.Random;
+
+/**
+ * TicTacToe
+ * UC2 performs a random toss to decide who plays first and assigns
+ * symbols (X or O) to the human and computer accordingly.
+ */
 public class Main {
 
-    // Create a 3x3 character array
-    static char[][] board = new char[3][3];
-    public static void main(String[] args) {
-        Initialize();
-        printboard();
-    }
-    static void Initialize(){
-        // Initialize all cells with '-'
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }}
+    static boolean isHumanTurn;
+    static char humanSymbol;
+    static char computerSymbol;
 
-    static void printboard(){
-        // Print the board
-        System.out.println("Empty Tic-Tac-Toe Board:");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
+    /**
+     * Entry point of the program.
+     * Executes the toss logic and displays the result.
+     */
+    public static void main(String[] args) {
+        tossAndAssignSymbols();
+        displayTossResult();
+    }
+
+    /**
+     * Uses random logic to decide the first player and assigns symbols
+     * based on the toss outcome.
+     */
+    static void tossAndAssignSymbols() {
+        Random random = new Random();
+
+        // Toss: 0 or 1
+        int toss = random.nextInt(2);
+
+        if (toss == 0) {
+            isHumanTurn = true;
+            humanSymbol = 'X';
+            computerSymbol = 'O';
+        } else {
+            isHumanTurn = false;
+            humanSymbol = 'O';
+            computerSymbol = 'X';
         }
     }
+
+    /**
+     * Displays the toss result, indicating who plays first and
+     * which symbol is assigned to each player.
+     */
+    static void displayTossResult() {
+        if (isHumanTurn) {
+            System.out.println("Human won the toss and will play first.");
+        } else {
+            System.out.println("Computer won the toss and will play first.");
+        }
+
+        System.out.println("Human Symbol: " + humanSymbol);
+        System.out.println("Computer Symbol: " + computerSymbol);
+    }
+}
