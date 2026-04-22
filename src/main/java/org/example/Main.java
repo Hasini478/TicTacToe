@@ -1,9 +1,6 @@
 package org.example;
-/**
- * TicTacToe
- * UC5 validates whether a move is inside the board boundaries
- * and whether the selected cell is empty.
- */
+import java.util.Scanner;
+
 public class Main {
 
     static char[][] board = {
@@ -13,27 +10,36 @@ public class Main {
     };
 
     public static void main(String[] args) {
-        System.out.println(isValidMove(1, 1));
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter slot (1-9): ");
+        int slot = sc.nextInt();
+
+        int row = getRowFromSlot(slot);
+        int col = getColFromSlot(slot);
+
+        if (isValidMove(row, col)) {
+            System.out.println("Valid move at (" + row + ", " + col + ")");
+        } else {
+            System.out.println("Invalid move!");
+        }
     }
 
-    /**
-     * Checks if the given row and column are within bounds
-     * and if the target cell is empty.
-     * Input: Row, Column
-     * Output: true if valid, false otherwise.
-     */
+    // UC4 → Slot to Row
+    static int getRowFromSlot(int slot) {
+        return (slot - 1) / 3;
+    }
+
+    // UC4 → Slot to Column
+    static int getColFromSlot(int slot) {
+        return (slot - 1) % 3;
+    }
+
+    // UC5 → Validation
     static boolean isValidMove(int row, int col) {
-
-        // Boundary check
-        if (row < 0 || row > 2 || col < 0 || col > 2) {
-            return false;
-        }
-
-        // Cell empty check
-        if (board[row][col] == '-') {
-            return true;
-        } else {
-            return false;
-        }
+        return row >= 0 && row < 3 &&
+                col >= 0 && col < 3 &&
+                board[row][col] == '-';
     }
 }
